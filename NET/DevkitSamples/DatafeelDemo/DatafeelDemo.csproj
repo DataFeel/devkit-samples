@@ -1,0 +1,126 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>DatafeelDemo</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>DatafeelDemo</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.datafeeldemo</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>1EC40ED89BF19070AFFCDAD3B69BABB5DB2A375C</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<AppInstallerUri>C:\GitHub\datafeel-sdk\Output</AppInstallerUri>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+    <MauiImage Update="Resources\Images\dot_ui_outer_ring.png" Resize="True" BaseSize="496,496" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Resources\NewFolder1\**" />
+	  <AndroidResource Remove="Resources\NewFolder2\**" />
+	  <AndroidResource Remove="Resources\NewFolder\**" />
+	  <Compile Remove="Resources\NewFolder1\**" />
+
+	  <Compile Remove="Resources\NewFolder2\**" />
+	  <Compile Remove="Resources\NewFolder\**" />
+	  <EmbeddedResource Remove="Resources\NewFolder1\**" />
+	  <EmbeddedResource Remove="Resources\NewFolder2\**" />
+	  <EmbeddedResource Remove="Resources\NewFolder\**" />
+	  <MauiCss Remove="Resources\NewFolder1\**" />
+	  <MauiCss Remove="Resources\NewFolder2\**" />
+	  <MauiCss Remove="Resources\NewFolder\**" />
+	  <MauiXaml Remove="Resources\NewFolder1\**" />
+	  <MauiXaml Remove="Resources\NewFolder2\**" />
+	  <MauiXaml Remove="Resources\NewFolder\**" />
+	  <None Remove="Resources\NewFolder1\**" />
+	  <None Remove="Resources\NewFolder2\**" />
+	  <None Remove="Resources\NewFolder\**" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\dotnet_bot.png" />
+    <EmbeddedResource Include="Resources\Images\dot_ui_outer_ring.png" />
+    <EmbeddedResource Include="Resources\Images\dot_ui_center.svg" />
+  </ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\fa_solid.ttf" />
+	  <None Remove="Resources\Fonts\Helvetica-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Helvetica.ttf" />
+	  <None Remove="Resources\Images\datafeel_headline_gradient.svg" />
+	  <None Remove="Resources\Images\datafeel_logo_gradient.svg" />
+	  <None Remove="Resources\Images\dot_ui.svg" />
+	  <None Remove="Resources\Images\dot_ui_center.svg" />
+	  <None Remove="Resources\Images\dot_ui_outer_ring.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CallAndResponse.Transport.Serial" Version="1.5.0-alpha" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+		<PackageReference Include="Datafeel" Version="2.0.1-alpha" />
+		<PackageReference Include="Datafeel.NET.BLE" Version="2.0.1-alpha" />
+		<PackageReference Include="Datafeel.NET.Serial" Version="2.0.1-alpha" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="ReactiveUI" Version="20.1.1" />
+		<PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
+		<PackageReference Include="ReactiveUI.Maui" Version="20.1.1" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+	</ItemGroup>
+
+</Project>

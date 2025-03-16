@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<maui:ReactiveContentPage
+    x:Class="DatafeelDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:df="clr-namespace:Datafeel;assembly=Datafeel"
+    xmlns:drawables="clr-namespace:DatafeelDemo.Drawables"
+    xmlns:maui="clr-namespace:ReactiveUI.Maui;assembly=ReactiveUI.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:DatafeelDemo"
+    x:DataType="vm:MainViewModel"
+    x:TypeArguments="vm:MainViewModel"
+    Shell.BackgroundColor="{StaticResource ButtonGrey}">
+
+    <ContentPage.Resources>
+        <drawables:DotDrawable x:Key="dotDrawable" />
+        <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+    <VerticalStackLayout
+        Margin="25"
+        HorizontalOptions="FillAndExpand"
+        Spacing="25">
+        <Grid HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="5"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Scale="0.80"
+                Source="datafeel_headline_gradient.png"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Grid HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Column="0"
+                FontSize="24"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsManagerConnected, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource PropertyLabel}"
+                Text="Connecting..." />
+            <ActivityIndicator
+                Grid.Column="1"
+                IsRunning="True"
+                IsVisible="{Binding IsManagerConnected, Converter={StaticResource InvertedBoolConverter}}" />
+        </Grid>
+
+
+        <Grid HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsManagerConnected}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width=".5*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Dot #" />
+            <Picker
+                x:Name="dotAddressPicker"
+                Grid.Row="1"
+                Grid.Column="2"
+                ItemsSource="{Binding DotAddressList}"
+                SelectedItem="{Binding Address}" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Device Name" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="2"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding DeviceName}" />
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Hardware ID" />
+            <Label
+                Grid.Row="3"
+                Grid.Column="2"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding HardwareID}" />
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Firmware ID" />
+            <Label
+                Grid.Row="4"
+                Grid.Column="2"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding FirmwareID}" />
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Serial Number" />
+            <Label
+                Grid.Row="5"
+                Grid.Column="2"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding SerialNumber, StringFormat='{0:xxx}'}" />
+
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Vibration Mode" />
+            <Picker
+                x:Name="vibrationModePicker"
+                Grid.Row="6"
+                Grid.Column="2"
+                ItemsSource="{Binding VibrationModesList}"
+                SelectedItem="{Binding VibrationMode}" />
+
+            <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Vibration Intensity" />
+            <Slider
+                x:Name="vibrationIntensitySlider"
+                Grid.Row="7"
+                Grid.Column="2"
+                Maximum="1.0"
+                Minimum="0.0"
+                Value="{Binding VibrationIntensity}" />
+
+            <Label
+                Grid.Row="8"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Style="{StaticResource PropertyLabel}"
+                Text="Vibration Frequency" />
+            <Slider
+                x:Name="vibrationFrequencySlider"
+                Grid.Row="8"
+                Grid.Column="2"
+                Maximum="250.0"
+                Minimum="100.0"
+                Value="{Binding VibrationFrequency}" />
+
+
+            <Label
+                Grid.Row="9"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Thermal Mode" />
+            <Picker
+                x:Name="thermalModePicker"
+                Grid.Row="9"
+                Grid.Column="2"
+                ItemsSource="{Binding ThermalModesList}"
+                SelectedItem="{Binding ThermalMode}" />
+
+            <Label
+                Grid.Row="10"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Style="{StaticResource PropertyLabel}"
+                Text="Thermal Intensity" />
+            <Slider
+                x:Name="thermalSlider"
+                Grid.Row="10"
+                Grid.Column="2"
+                Maximum="1.0"
+                Minimum="-1.0"
+                Value="{Binding ThermalIntensity}" />
+
+            <Label
+                Grid.Row="11"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Style="{StaticResource PropertyLabel}"
+                Text="Heatsink Temperature" />
+            <Label
+                Grid.Row="11"
+                Grid.Column="2"
+                IsEnabled="True"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding HeatsinkTemperature, StringFormat='{0:F1} C'}" />
+
+            <Label
+                Grid.Row="12"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Style="{StaticResource PropertyLabel}"
+                Text="Skin Temperature" />
+            <Label
+                Grid.Row="12"
+                Grid.Column="2"
+                IsEnabled="True"
+                Style="{StaticResource PropertyValue}"
+                Text="{Binding SkinTemperature, StringFormat='{0:F1} C'}" />
+
+            <Label
+                Grid.Row="13"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Style="{StaticResource PropertyLabel}"
+                Text="LED Mode" />
+            <Picker
+                Grid.Row="13"
+                Grid.Column="2"
+                IsEnabled="True"
+                ItemsSource="{Binding LedModesList}"
+                SelectedItem="{Binding LedMode}" />
+
+            <Label
+                Grid.Row="14"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Red" />
+            <Slider
+                Grid.Row="14"
+                Grid.Column="2"
+                Maximum="255"
+                Minimum="0"
+                Value="{Binding Red}" />
+
+            <Label
+                Grid.Row="15"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Green" />
+            <Slider
+                Grid.Row="15"
+                Grid.Column="2"
+                Maximum="255"
+                Minimum="0"
+                Value="{Binding Green}" />
+
+            <Label
+                Grid.Row="16"
+                Grid.Column="0"
+                Style="{StaticResource PropertyLabel}"
+                Text="Blue" />
+            <Slider
+                Grid.Row="16"
+                Grid.Column="2"
+                Maximum="255"
+                Minimum="0"
+                Value="{Binding Blue}" />
+        </Grid>
+    </VerticalStackLayout>
+
+</maui:ReactiveContentPage>
+
